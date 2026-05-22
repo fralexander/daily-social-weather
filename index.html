@@ -334,7 +334,7 @@
       }
     }
 
-   function downloadCard() {
+  function downloadCard() {
   if (!currentUsername) {
     alert("Please run an analysis first before saving your card!");
     return;
@@ -368,18 +368,17 @@
   const clonedFooter = clone.querySelector('.progress-text');
   if (clonedFooter) clonedFooter.style.fontSize = '0.95rem';
 
-
   const container = document.createElement('div');
   container.style.position = 'absolute';
-  container.style.top = '-9999px';
+  container.style.top = '0px';
   container.style.left = '-9999px';
   container.style.width = '450px';
-  container.style.height = 'auto';
+  container.style.height = 'auto'; 
   container.style.background = currentBg;
   container.style.borderRadius = '28px';
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
-  container.style.padding = '40px 25px 40px 25px';
+  container.style.padding = '40px 25px 40px 25px'; 
 
   container.appendChild(clone);
   document.body.appendChild(container);
@@ -389,8 +388,8 @@
       scale: 2,
       backgroundColor: null, 
       useCORS: true,
-      width: 450,
-      height: 720
+      windowWidth: 450,
+      windowHeight: container.scrollHeight
     }).then(canvas => {
       document.body.removeChild(container);
 
@@ -406,7 +405,7 @@
       }
       alert("Oops, couldn't generate the image file. Try again!");
     });
-  }, 50);
+  }, 150);
 }
 
     setTimeout(() => {
