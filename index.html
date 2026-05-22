@@ -17,7 +17,6 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    /* Changed height to min-height to allow page to grow vertically if needed */
     html, body { min-height: 100%; width: 100%; }
     
     body {
@@ -28,7 +27,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 15px; /* Increased vertical padding so it never touches screen edges */
+      padding: 40px 15px;
       overflow-x: hidden;
       transition: background 0.8s ease;
     }
@@ -41,7 +40,7 @@
       justify-content: center;
       background: transparent;
       width: 100%;
-      max-width: 480px; /* Kept your preferred narrow desktop size */
+      max-width: 480px;
     }
 
     .card {
@@ -147,7 +146,7 @@
       font-weight: 600;
       margin-bottom: 8px;
       letter-spacing: 0.5px;
-      white-space: nowrap; /* Forces text to stay safely on one single line */
+      white-space: nowrap;
     }
     
     .custom-progress-bar {
@@ -182,16 +181,15 @@
     }
     .progress-text { margin-top: 25px; font-size: 0.75rem; font-style: italic; opacity: 0.6; text-align: center; display: block; }
 
-    /* Media query to fix text crowding on mobile viewports */
     @media (max-width: 480px) {
       .capture-area {
-        padding: 15px; /* Drop padding slightly on screen so card width can expand */
+        padding: 15px;
       }
       .card {
-        padding: 25px 16px; /* Optimized inside padding for mobile screens */
+        padding: 25px 16px;
       }
       .gauge-label {
-        font-size: 0.82rem; /* Drop font slightly to match standard mobile viewports */
+        font-size: 0.82rem;
       }
     }
   </style>
@@ -353,6 +351,7 @@
   container.style.left = '-9999px';
   container.style.width = '450px';
   container.style.height = 'auto';
+  container.style.background = currentBg;
   container.style.borderRadius = '34px';
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
