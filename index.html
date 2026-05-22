@@ -337,36 +337,61 @@
     }
 
     function downloadCard() {
-      if (!currentUsername) {
-        alert("Please run an analysis first before saving your card!");
-        return;
+  if (!currentUsername) {
+    alert("Please run an analysis first before saving your card!");
+    return;
+  }
+
+  const originalZone = document.getElementById('export-zone');
+  const currentBg = getComputedStyle(document.body).backgroundImage;
+
+  const clone = originalZone.cloneNode(true);
+  
+  const container = document.createElement('div');
+  container.style.position = 'absolute';
+  container.style.top = '-9999px';
+  container.style.left = '-9999px';
+  container.style.width = '450px';
+  container.style.height = '720px';
+  container.style.background = currentBg;
+  container.style.borderRadius = '34px';
+  container.style.display = 'flex';
+  container.style.alignItems = 'center';
+  container.style.justifyContent = 'center';
+  container.style.padding = '20px';
+
+  clone.style.width = '100%';
+  clone.style.height = '100%';
+  clone.style.maxWidth = '100%';
+  clone.style.background = 'transparent';
+
+  container.appendChild(clone);
+  document.body.appendChild(container);
+
+  setTimeout(() => {
+    html2canvas(container, {
+      scale: 2,
+      backgroundColor: null, 
+      useCORS: true,
+      width: 450,
+      height: 720
+    }).then(canvas => {
+      document.body.removeChild(container);
+
+      const link = document.createElement('a');
+      const cleanName = currentUsername.replace('@', '');
+      link.download = `social-weather-${cleanName}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }).catch(err => {
+      console.error("Export failure:", err);
+      if (document.body.contains(container)) {
+        document.body.removeChild(container);
       }
-
-      const exportZone = document.getElementById('export-zone');
-      const currentBg = getComputedStyle(document.body).backgroundImage;
-      
-      exportZone.style.background = currentBg;
-
-      html2canvas(exportZone, {
-        scale: 2, 
-        backgroundColor: null, 
-        useCORS: true,
-        width: exportZone.scrollWidth,
-        height: exportZone.scrollHeight,
-        windowWidth: document.documentElement.clientWidth
-      }).then(canvas => {
-        exportZone.style.background = "transparent";
-
-        const link = document.createElement('a');
-        const cleanName = currentUsername.replace('@', '');
-        link.download = `social-weather-${cleanName}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      }).catch(err => {
-        console.error("Export failure:", err);
-        alert("Oops, couldn't generate the image file. Try again!");
-      });
-    }
+      alert("Oops, couldn't generate the image file. Try again!");
+    });
+  }, 50);
+}
 
     setTimeout(() => {
       const inputEl = document.getElementById('username');
