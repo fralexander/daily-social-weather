@@ -17,7 +17,6 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    /* Changed height to min-height to allow page to grow vertically if needed */
     html, body { min-height: 100%; width: 100%; }
     
     body {
@@ -28,7 +27,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 15px; /* Increased vertical padding so it never touches screen edges */
+      padding: 40px 15px;
       overflow-x: hidden;
       transition: background 0.8s ease;
     }
@@ -41,7 +40,7 @@
       justify-content: center;
       background: transparent;
       width: 100%;
-      max-width: 480px; /* Kept your preferred narrow desktop size */
+      max-width: 480px;
     }
 
     .card {
@@ -147,7 +146,7 @@
       font-weight: 600;
       margin-bottom: 8px;
       letter-spacing: 0.5px;
-      white-space: nowrap; /* Forces text to stay safely on one single line */
+      white-space: nowrap;
     }
     
     .custom-progress-bar {
