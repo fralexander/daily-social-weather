@@ -16,7 +16,9 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; width: 100%; }
+    
+    /* Changed height to min-height to allow page to grow vertically if needed */
+    html, body { min-height: 100%; width: 100%; }
     
     body {
       font-family: 'Poppins', sans-serif;
@@ -26,7 +28,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 40px 15px; /* Increased vertical padding so it never touches screen edges */
       overflow-x: hidden;
       transition: background 0.8s ease;
     }
@@ -39,7 +41,7 @@
       justify-content: center;
       background: transparent;
       width: 100%;
-      max-width: 540px; /* Aligné pour un format vertical parfait sur PC */
+      max-width: 480px; /* Kept your preferred narrow desktop size */
     }
 
     .card {
@@ -145,6 +147,7 @@
       font-weight: 600;
       margin-bottom: 8px;
       letter-spacing: 0.5px;
+      white-space: nowrap; /* Forces text to stay safely on one single line */
     }
     
     .custom-progress-bar {
@@ -179,9 +182,16 @@
     }
     .progress-text { margin-top: 25px; font-size: 0.75rem; font-style: italic; opacity: 0.6; text-align: center; display: block; }
 
-    @media (min-width: 768px) {
+    /* Media query to fix text crowding on mobile viewports */
+    @media (max-width: 480px) {
       .capture-area {
-        max-width: 480px !important; /* Fixé à la dimension demandée pour le PC */
+        padding: 15px; /* Drop padding slightly on screen so card width can expand */
+      }
+      .card {
+        padding: 25px 16px; /* Optimized inside padding for mobile screens */
+      }
+      .gauge-label {
+        font-size: 0.82rem; /* Drop font slightly to match standard mobile viewports */
       }
     }
   </style>
@@ -341,8 +351,9 @@
         scale: 2, 
         backgroundColor: null, 
         useCORS: true,
-        width: exportZone.offsetWidth,
-        windowWidth: exportZone.offsetWidth
+        width: exportZone.scrollWidth,
+        height: exportZone.scrollHeight,
+        windowWidth: document.documentElement.clientWidth
       }).then(canvas => {
         exportZone.style.background = "transparent";
 
