@@ -17,7 +17,6 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    /* Changed height to min-height to allow page to grow vertically if needed */
     html, body { min-height: 100%; width: 100%; }
     
     body {
@@ -28,7 +27,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 15px; /* Increased vertical padding so it never touches screen edges */
+      padding: 40px 15px;
       overflow-x: hidden;
       transition: background 0.8s ease;
     }
@@ -41,7 +40,7 @@
       justify-content: center;
       background: transparent;
       width: 100%;
-      max-width: 480px; /* Kept your preferred narrow desktop size */
+      max-width: 480px;
     }
 
     .card {
@@ -147,7 +146,7 @@
       font-weight: 600;
       margin-bottom: 8px;
       letter-spacing: 0.5px;
-      white-space: nowrap; /* Forces text to stay safely on one single line */
+      white-space: nowrap;
     }
     
     .custom-progress-bar {
@@ -335,7 +334,7 @@
       }
     }
 
-    function downloadCard() {
+   function downloadCard() {
   if (!currentUsername) {
     alert("Please run an analysis first before saving your card!");
     return;
@@ -346,6 +345,30 @@
 
   const clone = originalZone.cloneNode(true);
   
+  clone.style.padding = '0px';
+  clone.style.margin = '0px';
+  clone.style.width = '100%';
+  clone.style.maxWidth = '100%';
+  clone.style.background = 'transparent';
+
+  const clonedTitle = clone.querySelector('h1');
+  if (clonedTitle) clonedTitle.style.fontSize = '2rem';
+
+  const clonedBadge = clone.querySelector('.user-badge');
+  if (clonedBadge) clonedBadge.style.fontSize = '1.3rem';
+
+  const clonedLabels = clone.querySelectorAll('.gauge-label');
+  clonedLabels.forEach(label => {
+    label.style.fontSize = '1.1rem';
+  });
+
+  const clonedSub = clone.querySelector('.subtitle');
+  if (clonedSub) clonedSub.style.fontSize = '1rem';
+
+  const clonedFooter = clone.querySelector('.progress-text');
+  if (clonedFooter) clonedFooter.style.fontSize = '0.95rem';
+
+
   const container = document.createElement('div');
   container.style.position = 'absolute';
   container.style.top = '-9999px';
@@ -353,16 +376,10 @@
   container.style.width = '450px';
   container.style.height = 'auto';
   container.style.background = currentBg;
-  container.style.borderRadius = '34px';
+  container.style.borderRadius = '28px';
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
-  
-  container.style.padding = '10px';
-
-  clone.style.width = '100%';
-  clone.style.height = '100%';
-  clone.style.maxWidth = '100%';
-  clone.style.background = 'transparent';
+  container.style.padding = '30px';
 
   container.appendChild(clone);
   document.body.appendChild(container);
