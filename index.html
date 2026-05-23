@@ -217,7 +217,7 @@
       <div class="gauges-list">
         <div class="gauge-block">
           <div class="gauge-label">
-            <span>Instant Blocking Potential</span>
+            <span>TIMELINE COMPATIBILITY</span>
             <span id="score-blocking">0%</span>
           </div>
           <div class="custom-progress-bar">
@@ -227,7 +227,7 @@
 
         <div class="gauge-block">
           <div class="gauge-label">
-            <span>Algorithm Chemistry Score</span>
+            <span>ALGORITHM FAVORABILITY</span>
             <span id="score-chemistry">0%</span>
           </div>
           <div class="custom-progress-bar">
@@ -237,7 +237,7 @@
 
         <div class="gauge-block">
           <div class="gauge-label">
-            <span>Shitpost Greenlight Level</span>
+            <span>POSTING MOMENTUM</span>
             <span id="score-shitpost">0%</span>
           </div>
           <div class="custom-progress-bar">
@@ -287,6 +287,18 @@
       }
       return Math.abs(hash % 101);
     }
+	
+	function getBarColor(score) {
+  if (score < 35) {
+    return 'linear-gradient(90deg, #ff4e50, #ff7676)';
+  }
+
+  if (score < 70) {
+    return 'linear-gradient(90deg, #f9d423, #ffb347)';
+  }
+
+  return 'linear-gradient(90deg, #00c9a7, #92fe9d)';
+}
 
     function updateHoroscope() {
       const inputEl = document.getElementById('username');
@@ -316,16 +328,58 @@
       document.getElementById('bar-blocking').style.width = blockingScore + '%';
       document.getElementById('bar-chemistry').style.width = chemistryScore + '%';
       document.getElementById('bar-shitpost').style.width = shitpostScore + '%';
+	  
+	  document.getElementById('bar-blocking').style.background = getBarColor(blockingScore);
+	  document.getElementById('bar-chemistry').style.background = getBarColor(chemistryScore);
+	  document.getElementById('bar-shitpost').style.background = getBarColor(shitpostScore);
 
-      const positiveAverage = (chemistryScore + shitpostScore) / 2;
-      let rawMood = (positiveAverage - blockingScore) * 1.7;
+      function getScoreColor(score) {
+  if (score < 35) return 'red';
+  if (score < 70) return 'yellow';
+  return 'green';
+}
 
-      let emojiIndex = Math.floor(((rawMood + 100) / 200) * sortedWeather.length);
-      if (emojiIndex < 0) emojiIndex = 0;
-      if (emojiIndex >= sortedWeather.length) emojiIndex = sortedWeather.length - 1;
+const colors = [
+  getScoreColor(blockingScore),
+  getScoreColor(chemistryScore),
+  getScoreColor(shitpostScore)
+];
 
-      const selectedEmoji = sortedWeather[emojiIndex];
-      document.getElementById('weather-display').innerText = selectedEmoji;
+const redCount = colors.filter(c => c === 'red').length;
+const yellowCount = colors.filter(c => c === 'yellow').length;
+const greenCount = colors.filter(c => c === 'green').length;
+
+let selectedEmoji = '☁️';
+
+if (redCount === 3) {
+  selectedEmoji = '⛈️';
+}
+else if (redCount === 2 && yellowCount === 1) {
+  selectedEmoji = '🌩️';
+}
+else if (redCount === 1 && yellowCount === 2) {
+  selectedEmoji = '🌧️';
+}
+else if (yellowCount === 3) {
+  selectedEmoji = '☁️';
+}
+else if (yellowCount === 2 && greenCount === 1) {
+  selectedEmoji = '🌥️';
+}
+else if (yellowCount === 1 && greenCount === 2) {
+  selectedEmoji = '🌤️';
+}
+else if (greenCount === 3) {
+  selectedEmoji = '☀️';
+}
+else if (
+  (redCount === 1 && greenCount === 2) ||
+  (redCount === 2 && greenCount === 1)
+) {
+  selectedEmoji = '🌦️';
+}
+
+document.getElementById('weather-display').innerText = selectedEmoji;
 
       const theme = weatherThemes[selectedEmoji];
       if (theme) {
