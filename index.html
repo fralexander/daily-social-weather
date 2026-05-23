@@ -365,9 +365,12 @@ else if (redCount === 1 && yellowCount === 2) {
   selectedEmoji = '🌧️';
   selectedText = 'Expect a fairly quiet day on the feed.';
 }
-else if (yellowCount === 3) {
-  selectedEmoji = '☁️';
-  selectedText = 'Seems like just another regular day of scrolling.';
+else if (
+	(yellowCount === 3) ||
+	(redCount === 1 && greenCount === 1 && yellowCount ===1)
+) {	
+	selectedEmoji = '☁️';
+	selectedText = 'Seems like just another regular day of scrolling.';
 }
 else if (yellowCount === 2 && greenCount === 1) {
   selectedEmoji = '🌥️';
@@ -388,11 +391,7 @@ else if (
   selectedEmoji = '🌦️';
   selectedText = 'A chaotic but potentially interesting day is coming.';
 }
-else if (redCount === 1 && greenCount === 1 && yellowCount ===1) {
-  selectedEmoji = '☁️';
-  selectedText = 'Seems like just another regular day of scrolling.';
-}
-		
+
 document.getElementById('weather-display').innerText = selectedEmoji;
 document.getElementById('weather-text').innerText = selectedText;
       const theme = weatherThemes[selectedEmoji];
