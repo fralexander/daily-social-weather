@@ -247,8 +247,9 @@
       </div>
 
       <div class="weather-container">
-        <div class="weather-emoji" id="weather-display">☁️</div>
-      </div>
+  <div class="weather-emoji" id="weather-display">☁️</div>
+  <div id="weather-text" style="font-size: 0.95rem; font-weight: 600; margin-top: 10px; opacity: 0.95; line-height: 1.4;">Seems like just another regular day of scrolling.</div>
+</div>
 
       <span class="progress-text">What's the weather like today? Resets daily.</span>
     </div>
@@ -350,37 +351,50 @@ const yellowCount = colors.filter(c => c === 'yellow').length;
 const greenCount = colors.filter(c => c === 'green').length;
 
 let selectedEmoji = '☁️';
+let selectedText = '';
 
 if (redCount === 3) {
   selectedEmoji = '⛈️';
+  selectedText = 'Maybe you should take a break today.';
 }
 else if (redCount === 2 && yellowCount === 1) {
   selectedEmoji = '🌩️';
+  selectedText = 'It feels like the algorithm is testing your patience.';
 }
 else if (redCount === 1 && yellowCount === 2) {
   selectedEmoji = '🌧️';
+  selectedText = 'Expect a fairly quiet day on the feed.';
 }
 else if (yellowCount === 3) {
   selectedEmoji = '☁️';
+  selectedText = 'Seems like just another regular day of scrolling.';
 }
 else if (yellowCount === 2 && greenCount === 1) {
   selectedEmoji = '🌥️';
+  selectedText = 'The timeline appears to be slowly getting better.';
 }
 else if (yellowCount === 1 && greenCount === 2) {
   selectedEmoji = '🌤️';
+  selectedText = 'You will likely run into some good interactions today.';
 }
 else if (greenCount === 3) {
   selectedEmoji = '☀️';
+  selectedText = 'Could this be your day to own the internet? Enjoy!';
 }
 else if (
   (redCount === 1 && greenCount === 2) ||
   (redCount === 2 && greenCount === 1)
 ) {
   selectedEmoji = '🌦️';
+  selectedText = 'A chaotic but potentially interesting day is coming.';
 }
-
+else if (redCount === 1 && greenCount === 1 && yellowCount ===1) {
+  selectedEmoji = '☁️';
+  selectedText = 'Seems like just another regular day of scrolling.';
+}
+		
 document.getElementById('weather-display').innerText = selectedEmoji;
-
+document.getElementById('weather-text').innerText = selectedText;
       const theme = weatherThemes[selectedEmoji];
       if (theme) {
         document.documentElement.style.setProperty('--bg-gradient', theme.bg);
